@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart Example with Products</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Correct Bootstrap Icons CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .product-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .btn-green {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-green:hover {
+            background-color: #218838;
+            text-decoration: none;
+        }
+
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .card-body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .star i {
+            color: #ffc107;
+        }
+
+        .line {
+            border-bottom: 2px solid #ddd;
+            width: 50px;
+            margin: 20px auto;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body .price {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* Flexbox for product cards alignment */
+        .row.product-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .col-lg-4 {
+            flex: 1 1 30%; 
+            margin-bottom: 30px;
+        }
+
+        /* Ensure cards are aligned correctly on smaller screens */
+        @media (max-width: 992px) {
+            .col-lg-4 {
+                flex: 1 1 45%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .col-lg-4 {
+                flex: 1 1 100%; 
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Section -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Spices</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                </ul>
+                <button class="btn btn-primary" onclick="viewCart()">
+                    <i class="bi bi-cart"></i> View Cart (<span id="cartCount">0</span>)
+                </button>
+            </div>
+        </div>
+    </nav>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form id="loginForm">
+                    <!-- Email Input -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <!-- Password Input -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" form="loginForm">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Products Section -->
+    <div class="product bg-light" id="product"
+        style="background-image: url('images.img/species.jpg'); background-size: cover; background-position: center;">
+        <div class="container">
+            <div class="row py-5 text-center">
+                <div class="col-lg-6 m-auto">
+                    <p class="m-0">Green Agriculture</p>
+                    <h1>Our Best Products</h1>
+                    <div class="line my-4"></div>
+                    <p>Organic food is food that is produced without synthetic chemicals or genetically modified
+                        components. Organic farming is a holistic approach to agriculture that focuses on soil health,
+                        biodiversity, and environmental and social responsibility.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="container">
+        <div class="row product-cards">
+            <!-- Product 1 -->
+            <div class="col-lg-4 mb-4">
+                <div class="card p-2">
+                    <div class="card-body">
+                        <img src="images.img/orange.jpg" class="img-fluid product-img pb-3" alt="Orange">
+                        <h4 class="head1">Orange</h4>
+                        <p class="part1">3*454g / 15oz</p>
+                        <h4 class="price">Rs.90.00</h4>
+                        <div class="star">
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                        </div>
+                        <button class="btn my-4 btn-green">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="col-lg-4 mb-4">
+                <div class="card p-2">
+                    <div class="card-body">
+                        <img src="images.img/apaya.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+                        <h4 class="head1">Papaya</h4>
+                        <p class="part1">1*454g / 16oz</p>
+                        <h4 class="price">Rs.80.00</h4>
+                        <div class="star">
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star-fill"></i></span>
+                            <span><i class="bi bi-star"></i></span>
+                            <span><i class="bi bi-star"></i></span>
+                        </div>
+                        <button class="btn my-4 btn-green">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+            
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/pom.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Pomegranate</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.50.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/carrot.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Carrot </h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.100.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/tomato.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Tomato</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.120.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/cauliflower.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Cauliflower</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.150.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/corinder.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Corinder Leaf</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.60.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/mint.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Mint Leaf</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.120.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+ <!-- Product 3 -->
+ <div class="col-lg-4 mb-4">
+    <div class="card p-2">
+        <div class="card-body">
+            <img src="images.img/curry.jpg" class="img-fluid product-img pb-3" alt="Papaya">
+            <h4 class="head1">Curry Leaf</h4>
+            <p class="part1">1*454g / 16oz</p>
+            <h4 class="price">Rs.90.00</h4>
+            <div class="star">
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star-fill"></i></span>
+                <span><i class="bi bi-star"></i></span>
+                <span><i class="bi bi-star"></i></span>
+            </div>
+            <button class="btn my-4 btn-green">ADD TO CART</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+    <!-- Cart Section -->
+    <section class="discount py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-2 m-auto">
+                    <h2>Shopping Cart</h2>
+                    <ul id="cart"></ul>
+                    <p id="total">Total: Rs.0.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Cart array to store items
+        let cart = [];
+
+        // Function to update cart count and total price
+        function updateCart() {
+            // Update the cart count display
+            document.getElementById("cartCount").textContent = cart.length;
+
+            // Update the cart display with item names and prices
+            const cartList = document.getElementById("cart");
+            cartList.innerHTML = "";  // Clear the existing cart items
+            let total = 0;  // Initialize the total price
+
+            // Loop through each item in the cart and display it
+            cart.forEach(item => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${item.name} - Rs.${item.price.toFixed(2)}`;
+                cartList.appendChild(listItem);
+                total += item.price;  // Add the item's price to the total
+            });
+
+            // Update total price display with proper formatting
+            document.getElementById("total").textContent = `Total: Rs.${total.toFixed(2)}`;
+        }
+
+        // Function to add a product to the cart
+        function addToCart(name, price) {
+            const item = { name, price };
+            cart.push(item);  // Add the item to the cart array
+            updateCart();  // Update the cart display
+        }
+
+        // Event listeners for the "Add to Cart" buttons
+        document.querySelectorAll(".btn-green").forEach(button => {
+            button.addEventListener("click", function () {
+                const productCard = button.closest('.card-body');
+                const productName = productCard.querySelector(".head1").textContent;
+                const productPrice = parseFloat(productCard.querySelector(".price").textContent.replace('Rs.', '').trim());
+
+                // Add the product to the cart
+                addToCart(productName, productPrice);
+            });
+        });
+
+        // Function to view the cart (optional: can be expanded to show a modal or new page)
+        function viewCart() {
+            alert("Viewing Cart... (This can be expanded to show a modal or cart page)");
+        }
+    </script>
+</body>
+
+</html>

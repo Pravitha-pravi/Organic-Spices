@@ -1,0 +1,386 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spices</title>
+    <link rel="stylesheet" href="style.css">
+    <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cart = [];
+            function addToCart(product, element) {
+            const existingItem = cart.find(item => item.name === product);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;  
+            } else {
+                cart.push({ name: product, quantity: 1 });   
+            }
+    
+            alert(product + " has been added to your cart!");
+            const card = element.closest('.card');
+            card.classList.add('clicked');
+    
+            setTimeout(() => {
+                card.classList.remove('clicked');
+            }, 300);
+    
+            updateCartDisplay();  
+        }
+    
+        // Remove from Cart function
+        function removeFromCart(product) {
+            cart = cart.filter(item => item.name !== product);
+            alert(product + " has been removed from your cart!");
+            updateCartDisplay();  
+        }
+    
+        // Update Cart display count
+        function updateCartDisplay() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').innerText = cartCount;
+    
+            const cartTotal = cart.reduce((total, item) => total + (item.quantity * getItemPrice(item.name)), 0);
+            document.getElementById('cartTotal').innerText = `$${cartTotal.toFixed(2)}`;
+        }
+    
+        function getItemPrice(productName) {
+            const prices = {
+                'Turmeric Powder': 5.99,
+                'Cardamom': 7.49,
+                'Cinnamon': 3.99
+                // Add other products here
+            };
+            return prices[productName] || 0;
+        }
+    
+        // View Cart function (to show item details in a pop-up)
+        function viewCart() {
+            if (cart.length === 0) {
+                alert("Your cart is empty.");
+            } else {
+                const cartItems = cart.map(item => `${item.name} (Qty: ${item.quantity})`).join("\n");
+                const cartTotal = cart.reduce((total, item) => total + (item.quantity * getItemPrice(item.name)), 0);
+                alert("Items in your cart:\n" + cartItems + "\n\nTotal: $" + cartTotal.toFixed(2));
+            }
+        }
+    </script>
+    
+</head>
+<body>
+    <!-- Navbar -->    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Spices</a> 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#product">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#login"></a>
+                    </li>
+                </ul>
+            <button class="btn btn-primary" onclick="viewCart()">
+                <i class="fa-solid fa-cart-shopping"></i> View Cart (<span id="cartCount">0</span>)
+            </button>
+        </div>
+    </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <a href="#" class="btn btn-link">Forgot Password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Home Section --> 
+
+    <section id="home" class="text-center py-5">
+        <h1>ORGANIC SPICES</h1>
+        <p>Your description here.</p>
+        <div class="d-flex justify-content-center">
+            <div class="input-group mb-3 w-100 w-md-50" style="max-width: 500px;">
+                <input type="text" class="form-control" placeholder="Enter something..." id="input-field" />
+                <a href="products.html" class="btn btn-primary" type="button" id="get-started-button">Get Started</a>
+            </div>
+        </div>
+    </section>
+    
+    <br>
+    <!-- About Section --> 
+    <section id="about" class="py-5">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <img src="images.img/organic pic.jpg" class="img-fluid" alt="Organic Spices" style="width: 600px; height: 400px;">
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h1>ABOUT US</h1>
+                    <p>“100% organic” is a label used to describe products that contain 100% organic ingredients, excluding salt and water. This label can be used for most raw, unprocessed, or minimally processed farm crops. The Organic Content Standard (OCS 100) is a production standard that verifies the amount of organic material in non-food products. It also tracks the flow of raw materials from their source to the final product. OCS 100 can be used as a business-to-business tool to ensure that companies are selling quality products, as well as many grains, oats, and flours. The OCS applies to any non-food product containing 95-100 percent organic material. It verifies the presence and amount of organic material in a final product and tracks the flow of the raw material from its source to the final product. The OCS 100 relies on third-party verification to confirm whether a final product contains the accurate amount of a given organically grown material. OCS allows for transparent, consistent, and comprehensive independent evaluation and verification of organic material content claims on products. It can be used as a business-to-business tool to give companies the means to ensure that they are selling quality and getting what they pay for. Control Union Certifications BV is accredited by SLAB for this scheme under registration.</p>
+                </div> 
+            </div>
+        </div>
+    </section>
+<br>
+    <!-- product Section --> 
+
+    <section id="product"> 
+        <div class="container m-5">
+            <h1 class="text-center my-5">OUR PRODUCTS</h1>
+    
+            <!-- First row of product cards -->
+
+            <section id="product">
+                <div class="container mt-5"> 
+                    <!-- First row of product cards -->
+                    <div class="row g-4"> 
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/turmeric.jpg" class="card-img-top" alt="Turmeric Powder">
+                                <br>
+                                <h4>Turmeric Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Turmeric Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Turmeric Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/red chilli.jpg" class="card-img-top" alt="Chilli Powder">
+                                <br>
+                                <h4>Chilli Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Chilli Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Chilli Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/garam.jpg" class="card-img-top" alt="Garam Powder">
+                                <br>
+                                <h4>Garam Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Garam Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Garam Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Second row of product cards -->
+                    <div class="row g-4 my-4"> 
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/geru.jpg" class="card-img-top" alt="Geru Powder">
+                                <br>
+                                <h4>Geru Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Geru Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Geru Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/immunity.jpg" class="card-img-top" alt="Immunity Powder">
+                                <br>
+                                <h4>Immunity Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Immunity Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Immunity Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/soonth.jpg" class="card-img-top" alt="Soonth Powder">
+                                <br>
+                                <h4>Soonth Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Soonth Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Soonth Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Third row of product cards -->
+                    <div class="row g-4 my-4">
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/milk masala.jpg" class="card-img-top" alt="Milk Masala">
+                                <br>
+                                <h4>Milk Masala</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Milk Masala', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Milk Masala')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/tea.jpg" class="card-img-top" alt="Tea Masala">
+                                <br>
+                                <h4>Tea Masala</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Tea Masala', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Tea Masala')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-4 col-md-4 col-12">
+                            <div class="card">
+                                <img src="images.img/black.jpg" class="card-img-top" alt="Black Powder">
+                                <br>
+                                <h4>Black Powder</h4>
+                                <div class="card-body text-center">
+                                    <a href="#" class="btn btn-primary signin" onclick="addToCart('Black Powder', this)">Add to Cart</a>
+                                    <br><br>
+                                    <button class="btn btn-danger" onclick="removeFromCart('Black Powder')">Remove from Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                 </div>
+            </div>
+        </section>
+    </section>
+ <br>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-12">
+                    <img src="images.img/spices.jpg" alt="Spices" class="img-fluid">
+                </div>
+                <div class="col-lg-6 col-md-6 col-12">
+                    <h1>CONTACT US</h1>
+                    <form class="mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your name" required>
+                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <textarea class="form-control" placeholder="Enter your message" required></textarea>
+                        <button type="submit" class="btn signin">Send Message</button>
+                     </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Organic Spices Section -->
+                <div class="col-md-3">
+                    <h5 class="text-lowercase">Organic Spices</h5>
+                    <p>Pure, fresh, and organic spices from nature. We provide a wide variety of organic spices sourced from trusted farms to spice up your life naturally!</p>
+                </div>
+    
+                <!-- Quick Links Section -->
+                <div class="col-md-3">
+                    <h5 class="text-uppercase">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white lowercase">Home</a></li>
+                        <li><a href="#" class="text-white lowercase">Shop</a></li>
+                        <li><a href="#" class="text-white lowercase">About Us</a></li>
+                        <li><a href="#" class="text-white lowercase">Contact Us</a></li>
+                        <li><a href="#" class="text-white lowercase">FAQs</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Contact Us Section -->
+                <div class="col-md-3">
+                    <h5 class="text-uppercase">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Spice Lane, Flavor Town, India</li>
+                        <li><i class="fas fa-phone"></i> +91 123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> support@organicspices.com</li>
+                    </ul>
+                </div>
+    
+                <!-- Follow Us Section -->
+                <div class="col-md-3">
+                    <h5 class="text-lowercase">Follow Us</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                        <li><a href="#" class="text-white me-3"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#" class="text-white me-3"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#" class="text-white"><i class="fab fa-linkedin-in"></i> Linkedin</a></li>
+                    </ul>
+                </div>
+            </div>
+    
+            <!-- Footer Bottom Section -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <p>&copy; 2024 Organic Spices. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+
+    <!-- Add FontAwesome CDN for icons (if you haven't included it already) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    
+</body>
+</html>    

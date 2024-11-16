@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'); 
+
+/* General reset and font settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Navbar styles */
+#navbar {
+    background: #343a40;
+    padding: 1rem;
+}
+
+.navbar-brand {
+    font-size: 32px;
+    font-weight: 900;
+    color: #29f700 !important;
+}
+
+.navbar-nav .nav-link {
+    color: black !important;
+    font-size: 18px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #29f700;
+}
+
+.nav-item {
+    margin-right: 50px;
+}
+
+.nav-link {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Coupon code visibility logic */
+#coupon-code {
+    display: none; /* Hide the coupon code initially, ensure there's logic to toggle this */
+}
+
+/* Input field and button styling */
+#input-field, #get-started-button {
+    height: 50px;
+    line-height: 50px;
+}
+
+#input-field {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#get-started-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+/* Section styling */
+section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images.img/species.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+}
+
+/* Home Section */
+#home h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+#home p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+/* Input group */
+.input-group {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input-group .form-control {
+    border: 2px solid #29f700;
+    border-radius: 5px 0 0 5px;
+}
+
+.input-group .btn {
+    border: 2px solid #29f700;
+    background-color: #29f700;
+    color: white;
+    border-radius: 0 5px 5px 0;
+}
+
+.input-group .btn:hover {
+    background-color: #1e7c00;
+}
+
+/* About Section */
+#about {
+    background: linear-gradient(to right, #343a40, green 100%);
+}
+
+#about h1 {
+    font-weight: 800;
+    font-size: 50px;
+    color: white;
+}
+
+#about p {
+    color: white;
+}
+
+/* Product Section */
+#product {
+    background: #e5e5e5;
+}
+
+#product h1 {
+    color: black;
+    font-size: 50px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+#product img {
+    width: 250px;
+    height: 200px;
+}
+
+.product-img {
+    width: 100%;          /* Ensures image takes up full width */
+    height: 250px;        /* Fixed height for all product images */
+    object-fit: cover;    /* Ensures images maintain aspect ratio and fill container */
+}
+
+/* Green Add to Cart Button */
+.btn-green {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-green:hover {
+    background-color: #218838;
+    text-decoration: none;
+}
+
+/* Product card hover effect */
+.card {
+    transition: transform 0.3s ease;
+    width: 300px;
+    height: 300px;
+    background: #e5e5e5;
+    border: none;
+    box-shadow: 15px 20px 20px rgba(0, 0, 0, .3), inset 4px 4px 10px white;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3), inset -4px -4px 10px white;
+    transition: 0.3s;
+}
+
+.card.clicked {
+    transform: scale(1.05);
+}
+
+/* Contact Section Styles */
+#contact {
+    padding: 60px 0;
+    background-color: transparent;
+}
+
+#contact h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #29f700;
+}
+
+#contact img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.form-control {
+    border: 2px solid #29f700;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.form-control:focus {
+    border-color: #1e7c00;
+    box-shadow: 0 0 5px rgba(41, 247, 0, 0.5);
+}
+
+.btn.signin {
+    background-color: #29f700;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn.signin:hover {
+    background-color: #1e7c00;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 40px 0;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+
+footer .container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+footer h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+footer ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer ul li a:hover {
+    color: #f1c40f;
+}
+
+footer .social-icons a {
+    margin-right: 10px;
+    color: #fff;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+footer .social-icons a:hover {
+    color: #f1c40f;
+}
+
+footer .row {
+    margin-bottom: 20px;
+}
+
+footer .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+    .product .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    /* Discount Section */
+    .discount .head1 {
+        font-size: 1.8rem; /* Smaller font size for mobile */
+    }
+
+    .dbtn {
+        font-size: 1rem; /* Smaller button text for mobile */
+    }
+}
+
+/* General Section Styling */
+.discount {
+    background-color: #f8f9fa;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.discount .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.discount .row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Heading Styling */
+.discount .head1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.discount .bi-cash-coin {
+    color: #28a745;
+    font-size: 2rem;
+    margin-right: 10px;
+}
+
+/* Button Styling */
+.dbtn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.dbtn:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+.dbtn:focus {
+    outline: none;
+}
